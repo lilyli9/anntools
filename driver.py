@@ -15,96 +15,96 @@ import os
 import file_utils as fu
 import annotate as ann
 
-def run(infile, format):
+def run(infile, job_id, format):
 
     print("Running . . .")
 
-    ann.getSnpsFromDbSnp(vcf=infile, format='vcf', tmpextin='', 
+    ann.getSnpsFromDbSnp(vcf=infile, job_id=job_id, format='vcf', tmpextin='', 
         tmpextout='.1')
     print("dbSNP - done.")
     tmpextin = 1
     tmpextout = 2
 
-    ann.getBigRefGene(vcf=infile, format='vcf', tmpextin='.' + str(tmpextin),
+    ann.getBigRefGene(vcf=infile, job_id=job_id, format='vcf', tmpextin='.' + str(tmpextin),
         tmpextout='.' + str(tmpextout))
     print("BigRefGene - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.getGenes(vcf=infile, format='vcf', table='refGene', 
+    ann.getGenes(vcf=infile, job_id=job_id, format='vcf', table='refGene', 
         promoter_offset=500, tmpextin='.' + str(tmpextin), 
         tmpextout='.' + str(tmpextout))
     print("BigRefGene - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithCytoband(vcf=infile, format='vcf', table='cytoBand', 
+    ann.addOverlapWithCytoband(vcf=infile, job_id=job_id, format='vcf', table='cytoBand', 
         tmpextin='.' + str(tmpextin), tmpextout='.' + str(tmpextout))
     print("Cytoband - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithGadAll(vcf=infile, format='vcf', table='gadAll', 
+    ann.addOverlapWithGadAll(vcf=infile, job_id=job_id, format='vcf', table='gadAll', 
         tmpextin='.' + str(tmpextin), tmpextout='.' + str(tmpextout))
     print("gadAll - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithGwasCatalog(vcf=infile, format='vcf', 
+    ann.addOverlapWithGwasCatalog(vcf=infile, job_id=job_id, format='vcf', 
         table='gwasCatalog', tmpextin='.' + str(tmpextin), 
         tmpextout='.' + str(tmpextout))
     print("GwasCatalog - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithMiRNA(vcf=infile, format='vcf', table='targetScanS', 
+    ann.addOverlapWithMiRNA(vcf=infile, job_id=job_id, format='vcf', table='targetScanS', 
         tmpextin='.' + str(tmpextin), tmpextout='.' + str(tmpextout))
     print("miRNA - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWitHUGOGeneNomenclature(vcf=infile, format='vcf', 
+    ann.addOverlapWitHUGOGeneNomenclature(vcf=infile, job_id=job_id, format='vcf', 
         table='hugo', tmpextin='.' + str(tmpextin), 
         tmpextout='.' + str(tmpextout))
     print("HUGO Gene Nomenclature Committee - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithCnvDatabase(vcf=infile, format='vcf', table='dgv_Cnv', 
+    ann.addOverlapWithCnvDatabase(vcf=infile, job_id=job_id, format='vcf', table='dgv_Cnv', 
         tmpextin='.' + str(tmpextin), tmpextout='.' + str(tmpextout))
     print("dgv_Cnv - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithCnvDatabase(vcf=infile, format='vcf', 
+    ann.addOverlapWithCnvDatabase(vcf=infile, job_id=job_id, format='vcf', 
         table='abParts_IG_T_CelReceptors', tmpextin='.' + str(tmpextin), 
         tmpextout='.' + str(tmpextout))
     print("abParts_IG_T_CelReceptors - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithCnvDatabase(vcf=infile, format='vcf', 
+    ann.addOverlapWithCnvDatabase(vcf=infile, job_id=job_id, format='vcf', 
         table='mcCarroll_Cnv', tmpextin='.' + str(tmpextin), 
         tmpextout='.' + str(tmpextout))
     print("mcCarroll_Cnv - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithCnvDatabase(vcf=infile, format='vcf', 
+    ann.addOverlapWithCnvDatabase(vcf=infile, job_id=job_id, format='vcf', 
         table='conrad_Cnv', tmpextin='.' + str(tmpextin), 
         tmpextout='.' + str(tmpextout))
     print("conrad_Cnv - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithGenomicSuperDups(vcf=infile, format='vcf', 
+    ann.addOverlapWithGenomicSuperDups(vcf=infile, job_id=job_id, format='vcf', 
         table='genomicSuperDups', tmpextin='.' + str(tmpextin),
         tmpextout='.' + str(tmpextout))
     print("genomicSuperDups - done.")
     tmpextin = tmpextin + 1
     tmpextout = tmpextout + 1
 
-    ann.addOverlapWithTfbsConsSites(vcf=infile, table='tfbsConsSites',
+    ann.addOverlapWithTfbsConsSites(vcf=infile, job_id=job_id, table='tfbsConsSites',
         tmpextin='.' + str(tmpextin), tmpextout='.' + str(tmpextout))
     print("addOverlapWithTfbsConsSites - done.")
     tmpextin = tmpextin + 1
@@ -112,10 +112,13 @@ def run(infile, format):
 
     ## Cleanup
     for i in range(1, tmpextin):
-        fu.delete(infile + '.' + str(i))
+        fu.delete(infile + '.' + job_id + '.' + str(i))
 
-    os.rename(infile + '.' + str(tmpextin), infile + '.annot')
-    finalout=(infile + '.annot').replace('.vcf.annot', '.annot.vcf')
-    os.rename(infile + '.annot', finalout)
+    os.rename(infile + '.' + job_id + '.' + str(tmpextin), infile + '.' + job_id + '.annot')
+    tempout=(infile + '.' + job_id + '.annot').replace(f'.vcf.{job_id}', f'.{job_id}.vcf').replace('.vcf.annot', '.annot.vcf')
+    os.rename(infile + '.' + job_id + '.annot', tempout)
+
+    templogout=(infile + '.' + job_id + '.count.log').replace(f'.vcf.{job_id}', f'.{job_id}.vcf')
+    os.rename(infile + '.' + job_id + '.count.log', templogout)
 
 ### EOF

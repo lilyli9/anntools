@@ -110,12 +110,12 @@ def getComplementary(nuc):
 """"Format must be pileup or vcf
     Types of variants in dbSNP135: DIV, SNV, MNV, MIXED
 """ 
-def getSnpsFromDbSnp(vcf, format='vcf', tmpextin='', tmpextout='.1',
+def getSnpsFromDbSnp(vcf, job_id, format='vcf', tmpextin='', tmpextout='.1',
     varclass='SNV', sep='\t'):
     
-    outfile = vcf + tmpextout
+    outfile = vcf + '.' + job_id + tmpextout
     fh_out = open(outfile, "w")
-    logcountfile = vcf + '.count.log'
+    logcountfile = vcf + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'w')
     var_count = 0
 
@@ -197,10 +197,10 @@ def getSnpsFromDbSnp(vcf, format='vcf', tmpextin='', tmpextout='.1',
     2. chrom_pos_equal_nobase
     3. chrom_pos_unequal
 """
-def getBigRefGene(vcf, format='vcf', tmpextin='.1', tmpextout='.2', sep='\t'):
+def getBigRefGene(vcf, job_id, format='vcf', tmpextin='.1', tmpextout='.2', sep='\t'):
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
     fh_out = open(outfile, "w")
     inds = getFormatSpecificIndices(format=format)
     fh = open(vcf)
@@ -304,15 +304,15 @@ def getBigRefGene(vcf, format='vcf', tmpextin='.1', tmpextout='.2', sep='\t'):
 
 """Get information about location in gene structures
 """
-def getGenes(vcf, format='vcf', table='refGene', promoter_offset=500, 
+def getGenes(vcf, job_id, format='vcf', table='refGene', promoter_offset=500, 
     tmpextin='.2', tmpextout='.3', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
     fh_out = open(outfile, "w")
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
 
     interGenic_count = 0
@@ -503,15 +503,15 @@ def getGenes(vcf, format='vcf', table='refGene', promoter_offset=500,
 
 """Method used in INDELS, where bigRefGeneTable is not applicable
 """
-def getExonsEtAl(vcf, format='vcf', table='refGene', promoter_offset=500, 
+def getExonsEtAl(vcf, job_id, format='vcf', table='refGene', promoter_offset=500, 
     tmpextin='.2', tmpextout='.3', sep='\t'):
 
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + '.' + job_id + tmpextout
     fh_out = open(outfile, "w")
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
 
     interGenic_count = 0
@@ -714,20 +714,20 @@ def getExonsEtAl(vcf, format='vcf', table='refGene', promoter_offset=500,
 
 """Overlap with tfbsConsSites
 """
-def addOverlapWithTfbsConsSites(vcf, format='vcf', table='tfbsConsSites', 
+def addOverlapWithTfbsConsSites(vcf, job_id, format='vcf', table='tfbsConsSites', 
     tmpextin='.2', tmpextout='.3', sep='\t'):
 
     allowed_chrom=['1','2','3','4','5','6','7','8','9','10','11','12','13',
         '14','15','16','17','18','19','20','21','22','X','Y']
 
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -806,17 +806,17 @@ def addOverlapWithTfbsConsSites(vcf, format='vcf', table='tfbsConsSites',
 
 """Overlap with GadAll table
 """
-def addOverlapWithGadAll(vcf, format='vcf', table='gadAll', tmpextin='', 
+def addOverlapWithGadAll(vcf, job_id, format='vcf', table='gadAll', tmpextin='', 
     tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile+'.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -882,17 +882,17 @@ def addOverlapWithGadAll(vcf, format='vcf', table='gadAll', tmpextin='',
 
 
 """ Overlap with gwasCatalog table """
-def addOverlapWithGwasCatalog(vcf, format='vcf', table='gwasCatalog', \
+def addOverlapWithGwasCatalog(vcf, job_id, format='vcf', table='gwasCatalog', \
     tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile+'.count.log'
+    logcountfile = basefile + '.' + job_id +'.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -955,17 +955,17 @@ def addOverlapWithGwasCatalog(vcf, format='vcf', table='gwasCatalog', \
 
 """Overlap with HUGO Gene Nomenclature Committee (HGNC) table
 """
-def addOverlapWitHUGOGeneNomenclature(vcf, format='vcf', table='hugo', 
+def addOverlapWitHUGOGeneNomenclature(vcf, job_id, format='vcf', table='hugo', 
     tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -1035,17 +1035,17 @@ def addOverlapWitHUGOGeneNomenclature(vcf, format='vcf', table='hugo',
 
 """Overlap with segdup regions genomicSuperDups
 """
-def addOverlapWithGenomicSuperDups(vcf, format='vcf', 
+def addOverlapWithGenomicSuperDups(vcf, job_id, format='vcf', 
     table='genomicSuperDups', tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -1111,16 +1111,16 @@ def addOverlapWithGenomicSuperDups(vcf, format='vcf',
 """Searches Genes Databases and returns Genes/Cytobands 
    with which SNP or INDEL overlaps
 """
-def addOverlapWithRefGene(vcf, format='vcf', table='refGene', 
+def addOverlapWithRefGene(vcf, job_id, format='vcf', table='refGene', 
     tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -1189,16 +1189,16 @@ def addOverlapWithRefGene(vcf, format='vcf', table='refGene',
 
 """Method to find overlap with Cytoband table
 """
-def addOverlapWithCytoband(vcf, format='vcf', table='cytoBand', 
+def addOverlapWithCytoband(vcf, job_id, format='vcf', table='cytoBand', 
     tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -1268,17 +1268,17 @@ def addOverlapWithCytoband(vcf, format='vcf', table='cytoBand',
 
 """Method to find overlap with CNV tables
 """
-def addOverlapWithCnvDatabase(vcf, format='vcf', table='dgv_Cnv', 
+def addOverlapWithCnvDatabase(vcf, job_id, format='vcf', table='dgv_Cnv', 
     tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0
@@ -1336,17 +1336,17 @@ def addOverlapWithCnvDatabase(vcf, format='vcf', table='dgv_Cnv',
 
 """Method to find overlap with targetScanS tables
 """
-def addOverlapWithMiRNA(vcf, format='vcf', table='targetScanS', 
+def addOverlapWithMiRNA(vcf, job_id, format='vcf', table='targetScanS', 
     tmpextin='', tmpextout='.1', sep='\t'):
     
     basefile = vcf
-    vcf = basefile + tmpextin
-    outfile = basefile + tmpextout
+    vcf = basefile + '.' + job_id + tmpextin
+    outfile = basefile + '.' + job_id + tmpextout
 
     fh_out = open(outfile, "w")
     fh = open(vcf)
 
-    logcountfile = basefile + '.count.log'
+    logcountfile = basefile + '.' + job_id + '.count.log'
     fh_log = open(logcountfile, 'a')
     var_count = 0
     line_count = 0

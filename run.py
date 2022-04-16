@@ -32,7 +32,7 @@ if __name__ == '__main__':
 	# Call the AnnTools pipeline
 	if len(sys.argv) > 1:
 		with Timer():
-			driver.run(sys.argv[1], 'vcf')
+			driver.run(sys.argv[1], sys.argv[2], 'vcf')
 	else:
 		print("A valid .vcf file must be provided as input to this program.")
 
